@@ -54,6 +54,7 @@ class Game extends React.Component {
       ],
       stepNumber: 0,
       xIsNext: true,
+      toggled: false,
     };
   }
 
@@ -87,6 +88,12 @@ class Game extends React.Component {
     });
   }
 
+  toggle() {
+    this.setState({
+      toggled: !this.state.toggled,
+    });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -104,7 +111,6 @@ class Game extends React.Component {
       if (selected) {
         str = <b>{str}</b>;
       }
-
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{str}</button>
@@ -118,6 +124,8 @@ class Game extends React.Component {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
+    const toggle = <button onClick={() => this.toggle()}>toggle</button>;
+
     return (
       <div className="game">
         <div className="game-board">
@@ -128,7 +136,8 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <ol>{this.state.toggled ? moves.reverse() : moves}</ol>
+          <div>{toggle}</div>
         </div>
       </div>
     );
