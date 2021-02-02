@@ -98,17 +98,18 @@ class Game extends React.Component {
       const pos = move ? step.position[move] : null;
       const row = Math.floor(pos / 3) + 1;
       const col = (pos % 3) + 1;
-      let str = '';
-      console.log(step, move, pos);
+      let str = desc;
+      const selected = this.state.stepNumber === move ? true : false;
       if (pos !== null && pos >= 0) {
-        str = `(${col}, ${row})`;
+        str = `${desc} (${col}, ${row})`;
       }
+      if (selected) {
+        str = <b>{str}</b>;
+      }
+
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>
-            {desc}
-            {str}
-          </button>
+          <button onClick={() => this.jumpTo(move)}>{str}</button>
         </li>
       );
     });
